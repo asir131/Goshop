@@ -1,5 +1,5 @@
 import toast from "react-hot-toast"
-const AxiosToastError = (error)=>{
+ const AxiosToastError = (error)=>{
  toast.error(
     error?.response?.data?.message,
  )

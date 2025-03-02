@@ -3,27 +3,33 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import Divider from './Divider'
 import Axios from '../utils/Axios'
-
+import AxiosToastError from '../utils/AxiosToastError'
 import SummaryApi from '../common/SummaryApi'
 import { logout } from '../store/userSlice'
 import toast from 'react-hot-toast'
+// import { useNavigate } from 'react-router-dom'
 
 
-const UserMenu = () => {
+const UserMenu = ({close}) => {
     const user = useSelector((state) => state.user)
     const dispatch = useDispatch()
+    
+    // const navigate = useNavigate()
     const handleLogout =async () => {
       try {
+        
         const response = await Axios({
           ...SummaryApi.logout
         })
         if(response.data.success){
-          dispatch(logout)
+          
+          dispatch(logout())
           localStorage.clear()
+         close()
           toast.success(response.data.message)
         }
       } catch (error) {
-        console.log(error);
+        AxiosToastError(error);
         
         
       }
