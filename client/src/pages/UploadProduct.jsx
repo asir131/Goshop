@@ -2,7 +2,9 @@ import React from 'react'
 
 const UploadProduct = () => {
   return (
-    <div>UploadProduct</div>
+    <div>
+      UploadProduct
+    </div>
   )
 }
 
