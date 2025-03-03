@@ -8,12 +8,12 @@ const Dashboard = () => {
         <div className='container mx-auto p-3 grid  lg:grid-cols-[200px_minmax(900px,_1fr)_100px]'>
             
                 {/* left for menu */}
-                    <div className='p-4 sticky top-24 overflow-y-auto hidden lg:block'>
+                    <div className='p-4 sticky top-24 overflow-y-auto hidden lg:block border-r'>
                         <UserMenu/>
                     </div>
 
                 {/* right for content */}
-                    <div className='bg-white p-4'>
+                    <div className='bg-white min-h-[75vh]'>
                         <Outlet/>
                     </div>
             
