@@ -1,12 +1,17 @@
 import React, { useState } from 'react'
 import { IoClose } from "react-icons/io5";
 import uploadImage from '../utils/UploadImage';
-
-const UploadCategoryModel = ({close}) => {
+import SummaryApi from '../common/SummaryApi';
+import toast from 'react-hot-toast'
+import Axios from '../utils/Axios';
+import AxiosToastError from '../utils/AxiosToastError';
+const UploadCategoryModel = ({close,fetchData}) => {
   const [data,setData]= useState({
     name : "",
     image : "",
   })
+
+  const [loading,setLoading] = useState(false)
 const handleOnChange = (e) => {
   const {name,value} = e.target
 
@@ -18,8 +23,27 @@ const handleOnChange = (e) => {
   })
   
 }
-const handleSubmit=(e)=>{
+const handleSubmit=async(e)=>{
   e.preventDefault()
+
+  try {
+    setLoading(true)
+    const response = await Axios({
+        ...SummaryApi.addCategory,
+        data : data
+    })
+    const {data:responseData} = response
+
+    if(responseData.success) {
+      toast.success(responseData.message)
+      fetchData()
+      close()
+    }
+  } catch (error) {
+    AxiosToastError(error)
+  }finally{
+    setLoading(false)
+  }
 }
 
 const handleUploadCategoryImage = async(e) => {
@@ -38,6 +62,7 @@ const handleUploadCategoryImage = async(e) => {
       }
   })
   console.log(Image);
+  
   
   
 }
@@ -77,15 +102,22 @@ const handleUploadCategoryImage = async(e) => {
                   </div>
                   <label htmlFor="uploadCategoryImage">
                     <div  className={`
-                      ${!data.name? "bg-gray-400" : "bg-amber-400"} px-4 py-1 rounded cursor pointer`}>Upload Image</div>
+                      ${!data.name? "bg-gray-400" : "border border-amber-400 hover:bg-amber-400"} px-4 py-1 rounded cursor pointer`}>Upload Image</div>
                       <input disabled={!data.name} onChange={  handleUploadCategoryImage } type="file" id='uploadCategoryImage'
                       className='hidden'/>
 
                   </label>
+
                   
                 </div>
               </div>
-
+              <button
+                  className={
+                    `${data.name && data.image ? "bg-amber-400 hover:bg-amber-300" : "bg-slate-200"}  py-2 rounded font-semibold`
+                  }>
+                    Add Category
+                    </button>
+                  
             </form>
 
         </div>
