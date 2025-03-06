@@ -5,12 +5,23 @@ import NoData from '../components/NoData'
 import Axios from '../utils/Axios'
 import SummaryApi from '../common/SummaryApi'
 import EditCategory from '../components/EditCategory'
+import ConfirmBox from '../components/ConfirmBox'
+import toast from 'react-hot-toast'
+import AxiosToastError from '../utils/AxiosToastError'
 
 const CategoryPage = () => {
     const [openUploadCategory,setOpenUploadCategory]=useState(false)
     const [loading,setLoading] = useState(false)
     const [categoryData,setCategoryData] = useState([])
     const [openEdit,setOpenEdit] = useState(false)
+    const [editData,setEditData] = useState({
+        name : "",
+        image : "",
+    })
+    const [openConfirmBoxDelete,setOpenConfirmBoxDelete] = useState(false)
+    const [deleteCategory,setDeleteCategory] = useState({
+        _id : ""
+    })
     const fetchCategory = async() => {
         try {
             setLoading(true)
@@ -34,6 +45,23 @@ const CategoryPage = () => {
     useEffect(() => {
         fetchCategory()
     },[])
+
+    const handleDeleteCategory =async () => {
+        try {
+            const response = await Axios({
+                ...SummaryApi.deleteCategorys,
+                data : deleteCategory
+            })
+            const {data : responseData} = response
+            if(responseData.success){
+                toast.success(responseData.message)
+                fetchCategory()
+                setOpenConfirmBoxDelete(false)
+            }
+        } catch (error) {
+            AxiosToastError(error)
+        }
+    }
     
   return (
     <section>
@@ -54,10 +82,13 @@ const CategoryPage = () => {
                         <img  src={category.image} alt={category.name}
                         className='w-52' />
                         <div className='flex items-center justify-center h-9 gap-2'>
-                            <button className='flex-1 bg-green-200 hover:bg-green-300 text-green-600 font-medium py-1  rounded' onClick={()=>setOpenEdit(true)} > 
+                            <button className='flex-1 bg-green-200 hover:bg-green-300 text-green-600 font-medium py-1  rounded' onClick={()=>{setOpenEdit(true)
+                                setEditData(category)}} > 
                                 Edit
                             </button>
-                            <button className='flex-1 bg-red-200 hover:bg-red-300 text-red-600 font-medium py-1 rounded' >
+                            <button className='flex-1 bg-red-200 hover:bg-red-300 text-red-600 font-medium py-1 rounded' onClick={()=>{setOpenConfirmBoxDelete(true)
+                                setDeleteCategory(category)
+                            }}>
                                 Delete
                             </button>
                         </div>
@@ -69,7 +100,7 @@ const CategoryPage = () => {
         </div>
         {
             openEdit && (
-                <EditCategory />
+                <EditCategory data={editData} fetchData={fetchCategory} close={()=>setOpenEdit(false)}/>
             )
         }
         {
@@ -82,6 +113,13 @@ const CategoryPage = () => {
             openUploadCategory && (
                 <UploadCategoryModel fetchData={fetchCategory} close={()=>setOpenUploadCategory(false)}/>
             )
+        }{
+           openConfirmBoxDelete && (
+            <ConfirmBox 
+            cancel={()=>setOpenConfirmBoxDelete(false)} 
+            confirm={handleDeleteCategory} 
+            close={()=>setOpenConfirmBoxDelete(false)}/>
+           )
         }
         
         

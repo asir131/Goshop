@@ -52,8 +52,9 @@ const handleUploadCategoryImage = async(e) => {
   if(!file){
     return
   }
-  
+  setLoading(true)
   const response = await uploadImage(file)
+  setLoading(false)
   const {data : ImageResponse} = response
   setData((preve) => {
       return{
@@ -67,7 +68,7 @@ const handleUploadCategoryImage = async(e) => {
   
 }
   return (
-    <section className='fixed top-0 p-4 bottom-0 left-0 right-0 bg-neutral-800 opacity-60 flex items-center justify-center'>
+    <section className='fixed top-0 p-4 bottom-0 left-0 right-0 bg-neutral-800/60 flex items-center justify-center'>
 
         <div className='bg-white max-w-4xl w-full p-4 rounded'>
             <div className='flex items-center justify-between'>
@@ -102,7 +103,9 @@ const handleUploadCategoryImage = async(e) => {
                   </div>
                   <label htmlFor="uploadCategoryImage">
                     <div  className={`
-                      ${!data.name? "bg-gray-400" : "border border-amber-400 hover:bg-amber-400"} px-4 py-1 rounded cursor pointer`}>Upload Image</div>
+                      ${!data.name? "bg-gray-400" : "border border-amber-400 hover:bg-amber-400"} px-4 py-1 rounded cursor pointer`}>
+                        {loading ? "Loading..." : "Upload Image"}
+                        </div>
                       <input disabled={!data.name} onChange={  handleUploadCategoryImage } type="file" id='uploadCategoryImage'
                       className='hidden'/>
 
