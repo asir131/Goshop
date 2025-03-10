@@ -9,6 +9,7 @@ import { logout } from '../store/userSlice'
 import toast from 'react-hot-toast'
  import { useNavigate } from 'react-router-dom'
  import { GoLinkExternal } from "react-icons/go";
+import isAdmin from '../utils/isAdmin'
 
 
 
@@ -48,7 +49,7 @@ const UserMenu = ({close}) => {
   return (
     <div>
         <div className='font-semibold'>My Account</div>
-        <div className='text-sm flex items-center gap-3'>{user.name ||user.mobile}
+        <div className='text-sm flex items-center gap-3'>{user.name ||user.mobile} <span className='text-medium text-red-600'>{user.role==="ADMIN"?"(Admin)":""}</span>
           <Link onClick={handleClose} to={"/dashboard/profile"}>
              <GoLinkExternal size={15} className='hover:text-amber-500'/>
           </Link>
@@ -56,15 +57,33 @@ const UserMenu = ({close}) => {
         <Divider/>
         <div className='text-sm grid gap-2'>
 
-            
+            {
+              isAdmin(user.role) && (
+                <Link onClick={handleClose} to={"/dashboard/category"} className='hover:bg-yellow-500 rounded p-2'>Category</Link>
+              )
+            }
 
-            <Link onClick={handleClose} to={"/dashboard/category"} className='hover:bg-yellow-500 rounded p-2'>Category</Link>
+            {
+              isAdmin(user.role) && (
+                
+                  <Link onClick={handleClose} to={"/dashboard/subcategory"} className='hover:bg-yellow-500 rounded p-2'>Sub Category</Link>
+              )
+            }
 
-            <Link onClick={handleClose} to={"/dashboard/subcategory"} className='hover:bg-yellow-500 rounded p-2'>Sub Category</Link>
+            {
+              isAdmin(user.role) && (
+                
+                <Link onClick={handleClose} to={"/dashboard/upload-product"} className='hover:bg-yellow-500 rounded p-2'>Upload Product</Link>
+              )
+            }
+            {
+              isAdmin(user.role) && (
+                
+                <Link onClick={handleClose} to={"/dashboard/product"} className='hover:bg-yellow-500 rounded p-2'>Product</Link>
+              )
+            }
 
-            <Link onClick={handleClose} to={"/dashboard/upload-product"} className='hover:bg-yellow-500 rounded p-2'>Upload Product</Link>
 
-            <Link onClick={handleClose} to={"/dashboard/product"} className='hover:bg-yellow-500 rounded p-2'>Product</Link>
 
             <Link onClick={handleClose} to={"/dashboard/myorders"} className='hover:bg-yellow-500 rounded p-2'>My Orders</Link>
 

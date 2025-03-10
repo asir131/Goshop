@@ -8,6 +8,7 @@ import EditCategory from '../components/EditCategory'
 import ConfirmBox from '../components/ConfirmBox'
 import toast from 'react-hot-toast'
 import AxiosToastError from '../utils/AxiosToastError'
+import { useSelector } from 'react-redux'
 
 const CategoryPage = () => {
     const [openUploadCategory,setOpenUploadCategory]=useState(false)
@@ -22,29 +23,35 @@ const CategoryPage = () => {
     const [deleteCategory,setDeleteCategory] = useState({
         _id : ""
     })
-    const fetchCategory = async() => {
-        try {
-            setLoading(true)
-            const response = await Axios({
-                ...SummaryApi.getCategory
-            })
-            const {data : responseData} = response
 
-            if(responseData.success){
-                setCategoryData(responseData.data)
-            }
-            
-        } catch (error) {
-            console.log(error);
-            
-        }finally {
-            setLoading(false)
-        }
-    }
+    const allCategory =useSelector(state=>state.product.allCategory)
+    
+    useEffect(()=>{
+        setCategoryData(allCategory)
+    },[allCategory])
+    // const fetchCategory = async() => {
+    //     try {
+    //         setLoading(true)
+    //         const response = await Axios({
+    //             ...SummaryApi.getCategory
+    //         })
+    //         const {data : responseData} = response
 
-    useEffect(() => {
-        fetchCategory()
-    },[])
+    //         if(responseData.success){
+    //             setCategoryData(responseData.data)
+    //         }
+            
+    //     } catch (error) {
+    //         console.log(error);
+            
+    //     }finally {
+    //         setLoading(false)
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     fetchCategory()
+    // },[])
 
     const handleDeleteCategory =async () => {
         try {
@@ -55,7 +62,8 @@ const CategoryPage = () => {
             const {data : responseData} = response
             if(responseData.success){
                 toast.success(responseData.message)
-                fetchCategory()
+                setCategoryData(allCategory)
+                // fetchCategory()
                 setOpenConfirmBoxDelete(false)
             }
         } catch (error) {
@@ -74,7 +82,7 @@ const CategoryPage = () => {
                 <NoData/>
             )
         }
-        <div className='p-4 flex gap-2'>
+        <div className='p-4 grid grid-cols-6 gap-2 '>
         {
             categoryData.map((category,index)=>{
                 return(
