@@ -35,7 +35,7 @@ const UploadSubCategoryModel = ({close,fetchData}) => {
       try {
         setLoading(true)
         const response = await Axios({
-            ...SummaryApi.addCategory,
+            ...SummaryApi.createSubCategory,
             data : data
         })
         const {data:responseData} = response
@@ -68,7 +68,7 @@ const UploadSubCategoryModel = ({close,fetchData}) => {
             image : ImageResponse.data.url
           }
       })
-      console.log(Image);
+      
       
       
       
@@ -175,7 +175,7 @@ const UploadSubCategoryModel = ({close,fetchData}) => {
                             })
                         
                     }} className='w-full p-2 bg-transparent outline-none border' name="" id="">
-                        <option value="" disabled>Select Category</option>
+                        <option value="" >Select Category</option>
                         {
                             allCategory.map((category,index) => {
                                 return (
@@ -189,7 +189,7 @@ const UploadSubCategoryModel = ({close,fetchData}) => {
 
                   <button
                       className={
-                        `${data.name && data.image ? "bg-amber-400 hover:bg-amber-300" : "bg-slate-200"}  py-2 rounded font-semibold`
+                        `${data.name && data.image && data.category[0]? "bg-amber-400 hover:bg-amber-300" : "bg-slate-200"}  py-2 rounded font-semibold`
                       }>
                         Add Sub Category
                         </button>
