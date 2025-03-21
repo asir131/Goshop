@@ -79,9 +79,9 @@ const ProductListPage = () => {
         <div className=' min-h-[88vh] max-h-[88vh] overflow-y-scroll  grid gap-1 shadow-md scrollbarCustom bg-white py-2'>
           {
             DisplaySubCatory.map((s, index) => {
-               const link = `/${valideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${valideURLConvert(s.name)}-${s._id}`
+              const link = `/${valideURLConvert(s?.category[0]?.name)}-${s?.category[0]?._id}/${valideURLConvert(s.name)}-${s._id}`
               return (
-                <Link to={link} className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
+                <Link key={index} to={link} className={`w-full p-2 lg:flex items-center lg:w-full lg:h-16 box-border lg:gap-4 border-b 
                   hover:bg-green-100 cursor-pointer
                   ${subCategoryId === s._id ? "bg-green-100" : ""}
                 `}
@@ -108,8 +108,8 @@ const ProductListPage = () => {
           </div>
           <div>
 
-           <div className='min-h-[80vh] max-h-[80vh] overflow-y-auto relative'>
-            <div className=' grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4 '>
+            <div className='min-h-[80vh] max-h-[80vh] overflow-y-auto relative'>
+              <div className=' grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 p-4 gap-4 '>
                 {
                   data.map((p, index) => {
                     return (
@@ -121,7 +121,7 @@ const ProductListPage = () => {
                   })
                 }
               </div>
-           </div>
+            </div>
 
             {
               loading && (
