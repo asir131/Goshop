@@ -100,18 +100,18 @@ const SummaryApi = {
     url: '/api/product/get-product-details',
     method: 'post'
   },
-  // updateProductDetails : {
-  //     url : "/api/product/update-product-details",
-  //     method : 'put'
-  // },
-  // deleteProduct : {
-  //     url : "/api/product/delete-product",
-  //     method : 'delete'
-  // },
-  // searchProduct : {
-  //     url : '/api/product/search-product',
-  //     method : 'post'
-  // },
+  updateProductDetails : {
+      url : "/api/product/update-product-details",
+      method : 'put'
+  },
+  deleteProduct : {
+      url : "/api/product/delete-product",
+      method : 'delete'
+  },
+  searchProduct : {
+      url : '/api/product/search-product',
+      method : 'post'
+  },
   // addTocart : {
   //     url : "/api/cart/create",
   //     method : 'post'
