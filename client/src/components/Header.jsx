@@ -11,16 +11,19 @@ import { VscTriangleUp } from "react-icons/vsc";
 import UserMenu from './UserMenu';
 import { DisplayPriceInRupees } from '../utils/DisplayPriceInRupees';
 import { useGlobalContext } from '../provider/GlobalProvider';
+import DisplayCartItem from './DisplayCartItem';
 const Header = () => {
   const [isMobile] = useMobile()
   const location = useLocation()
   const isSearchPage = location.pathname === '/search'
   const navigate = useNavigate()
   const user = useSelector((state) => state?.user)
-  const [openUserMenu, setOpenUserMenu] = useState(false)
+  // const [openUserMenu, setOpenUserMenu] = useState(false)
   const cartItem = useSelector(state => state.cartItem.cart)
   const { totalPrice, totalQty } = useGlobalContext()
   const [openCartSection, setOpenCartSection] = useState(false)
+  const [openUserMenu, setOpenUserMenu] = useState(false)
+  // const cartItem = useSelector(state => state.cartItem.cart)
 
   const redirectToLoginPage = () => {
     navigate("/login")
@@ -106,7 +109,7 @@ const Header = () => {
                     <button onClick={redirectToLoginPage} className='font-bold '>Login</button>
                   )
                 }
-                <button className='flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded text-white'>
+                <button onClick={()=>setOpenCartSection(true)} className='flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded text-white'>
                   <div className='hover:animate-bounce'>
                     <FaCartShopping size={28} />
 
@@ -133,6 +136,11 @@ const Header = () => {
       <div className='container mx-auto px-2 lg:hidden'>
         <Search />
       </div>
+      {
+                openCartSection && (
+                    <DisplayCartItem close={() => setOpenCartSection(false)} />
+                )
+            }
     </header>
   )
 }
