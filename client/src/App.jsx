@@ -1,5 +1,5 @@
 
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import './App.css'
 import Header from './components/Header'
 import Footer from './components/Footer'
@@ -11,9 +11,11 @@ import { useDispatch } from 'react-redux';
 import SummaryApi from './common/SummaryApi';
 import Axios from './utils/Axios';
 import { setAllCategory, setAllSubCategory,setLoadingCategory } from './store/productSlice';
+import GlobalProvider from './provider/GlobalProvider';
+import CartMobileLink from './components/CartMobile';
 function App() {
   const dispatch = useDispatch()
-
+  const location = useLocation()
   const fetchUser = async() => {
     const userData = await fetchUserDetails()
     
@@ -65,14 +67,15 @@ function App() {
    },[])
 
   return (
-    <>
+    <GlobalProvider> 
     <Header/>
     <main className='min-h-[78vh]'>
       <Outlet/>
     </main>
     <Footer/>
     <Toaster />
-    </>
+    <CartMobileLink/>
+    </GlobalProvider>
   )
 }
 
