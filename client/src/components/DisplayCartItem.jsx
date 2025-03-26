@@ -27,8 +27,8 @@ const DisplayCartItem = ({close}) => {
         toast("Please Login")
     }
   return (
-    <section className='bg-neutral-900/70 fixed top-0 bottom-0 right-0 left-0  z-50'>
-        <div className='bg-white w-full max-w-sm min-h-screen max-h-screen ml-auto'>
+    <section className='bg-neutral-900/70  fixed top-0 bottom-0 right-0 left-0  z-5'>
+        <div className='bg-white w-full max-w-sm min-h-screen max-h-screen ml-auto z-5'>
             <div className='flex items-center p-4 shadow-md gap-3 justify-between'>
                 <h2 className='font-semibold'>Cart</h2>
                 <Link to={"/"} className='lg:hidden'>
