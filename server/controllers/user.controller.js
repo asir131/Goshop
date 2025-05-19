@@ -150,10 +150,19 @@ export async function loginController(req,res){
         const cookiesOption = {
             httpOnly : true,
             secure : true,
-            sameSite : "None"
+            sameSite : "None",
+            path: '/',                    
+            maxAge: 15 * 60 * 1000  
         }
-        res.cookie('accessToken',accesstoken,cookiesOption)
-        res.cookie('refreshToken',refreshToken,cookiesOption)
+        res.cookie('accessToken', accesstoken, {
+            ...cookiesOption,
+            maxAge: 15 * 60 * 1000 // 15 minutes
+        });
+        
+        res.cookie('refreshToken', refreshToken, {
+            ...cookiesOption,
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        });
 
         return res.json({
             message : "Login successfully",
