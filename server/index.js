@@ -45,7 +45,7 @@ app.use('/api/subcategory',subCategoryRouter)
 app.use("/api/product",productRouter)
 app.use("/api/cart",cartRouter)
 connectDB().then(() => {
-  app.listen(PORT, '0.0.0.0', () => {
+  app.listen(PORT, () => {
     console.log(`✅ Server is listening on http://0.0.0.0:${PORT}`);
   });
 }).catch((err) => {
