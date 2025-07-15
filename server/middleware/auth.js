@@ -4,7 +4,7 @@ const auth = (req, res, next) => {
   try {
     const authHeader = req.headers?.authorization;
     const tokenFromHeader = authHeader?.startsWith("Bearer ") ? authHeader.split(" ")[1] : null;
-    const token = req.cookies?.accessToken || tokenFromHeader;
+    const token = req?.cookies?.accessToken || tokenFromHeader;
 
     if (!token) {
       return res.status(401).json({
