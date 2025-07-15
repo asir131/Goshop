@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+   "data": {
+    "accessToken": "new_jwt_token"
+  },
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js"
